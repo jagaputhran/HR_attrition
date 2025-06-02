@@ -180,65 +180,82 @@ if uploaded_file is not None:
                 '2023 Rating': [rating_2023_encoded]
             })
 
-            # Show both prediction scenarios side by side
-            col1, col2 = st.columns(2)
+            # Define example profiles for both scenarios
+            example_resign = {
+                'Professional Level': 'Senior Developer',
+                'Team': 'Engineering',
+                'Gender': 'Male',
+                'Tenure': 12,
+                '2022 Rating': 'Effective',
+                '2023 Rating': 'Off Track'
+            }
             
-            with col1:
-                st.subheader("Scenario 1: Likely to Resign")
-                st.write("Example Profile:")
-                st.write("- Professional Level: Senior Developer")
-                st.write("- Team: Engineering")
-                st.write("- Gender: Male")
-                st.write("- Tenure: 12 months")
-                st.write("- 2022 Rating: Effective")
-                st.write("- 2023 Rating: Off Track")
-                st.error("Prediction: Will Resign")
-                st.warning("Recommended Actions:")
-                actions_resign = [
+            example_stay = {
+                'Professional Level': 'Manager',
+                'Team': 'HR',
+                'Gender': 'Female',
+                'Tenure': 36,
+                '2022 Rating': 'Outstanding',
+                '2023 Rating': 'Outstanding'
+            }
+            
+            # Check if current input matches either example
+            current_input = {
+                'Professional Level': professional_level,
+                'Team': team,
+                'Gender': gender,
+                'Tenure': tenure,
+                '2022 Rating': rating_2022,
+                '2023 Rating': rating_2023
+            }
+            
+            # Determine prediction based on input
+            if (current_input['Tenure'] <= 18 and 
+                current_input['2023 Rating'] in ['Off Track', 'No Review'] and
+                current_input['Professional Level'] in ['Senior Developer', 'Developer']):
+                prediction = "Will Resign"
+                prediction_color = "red"
+                actions = [
                     "Schedule urgent one-on-one meeting",
                     "Review compensation and benefits",
                     "Discuss career growth opportunities",
                     "Consider retention package"
                 ]
-                for action in actions_resign:
-                    st.write(f"• {action}")
-            
-            with col2:
-                st.subheader("Scenario 2: Likely to Stay")
-                st.write("Example Profile:")
-                st.write("- Professional Level: Manager")
-                st.write("- Team: HR")
-                st.write("- Gender: Female")
-                st.write("- Tenure: 36 months")
-                st.write("- 2022 Rating: Outstanding")
-                st.write("- 2023 Rating: Outstanding")
-                st.success("Prediction: Will Not Resign")
-                st.info("Retention Status:")
-                actions_stay = [
+            else:
+                prediction = "Will Not Resign"
+                prediction_color = "green"
+                actions = [
                     "Employee is highly engaged",
                     "Continue regular check-ins",
                     "Acknowledge good performance",
                     "Plan next career steps"
                 ]
-                for action in actions_stay:
-                    st.write(f"• {action}")
+            
+            # Show the prediction result
+            st.subheader("Prediction Result:")
+            if prediction_color == "red":
+                st.error(f"Prediction: {prediction}")
+                st.warning("Recommended Actions:")
+            else:
+                st.success(f"Prediction: {prediction}")
+                st.info("Retention Status:")
+                
+            for action in actions:
+                st.write(f"• {action}")
             
             # Add visual separation
             st.markdown("---")
             
-            # Show current input's prediction (can customize this as needed)
-            st.subheader("Your Input Analysis:")
+            # Show example scenarios
+            st.subheader("Example Scenarios:")
+            col1, col2 = st.columns(2)
             
-            # Toggle to switch between scenarios for demo
-            show_resign = st.toggle("Show 'Will Resign' scenario for current input", value=False)
+            with col1:
+                st.write("**Example 1: Likely to Resign**")
+                for key, value in example_resign.items():
+                    st.write(f"- {key}: {value}")
             
-            if show_resign:
-                st.error("Based on the input, employee is at risk of resigning")
-                st.warning("Recommended Immediate Actions:")
-                for action in actions_resign:
-                    st.write(f"✓ {action}")
-            else:
-                st.success("Based on the input, employee is likely to stay")
-                st.info("Retention Actions:")
-                for action in actions_stay:
-                    st.write(f"✓ {action}")
+            with col2:
+                st.write("**Example 2: Likely to Stay**")
+                for key, value in example_stay.items():
+                    st.write(f"- {key}: {value}")
