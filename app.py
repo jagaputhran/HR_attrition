@@ -182,5 +182,55 @@ if uploaded_file is not None:
 
             # Make prediction
             prediction = rf_model.predict(input_data)[0]
+            
+            # Show both predictions with hardcoded examples
+            st.subheader("Prediction Results:")
+            
+            # Example 1: Will Resign (Hardcoded example)
+            st.write("1. Example - Likely to Resign:")
+            st.write("   - Professional Level: Senior Developer")
+            st.write("   - Team: Engineering")
+            st.write("   - Gender: Male")
+            st.write("   - Tenure: 24 months")
+            st.write("   - 2022 Rating: Effective")
+            st.write("   - 2023 Rating: Off Track")
+            st.success("   Prediction: Will resign (Example)")
+            
+            # Example 2: Will Not Resign (Hardcoded example)
+            st.write("2. Example - Likely to Stay:")
+            st.write("   - Professional Level: Manager")
+            st.write("   - Team: HR")
+            st.write("   - Gender: Female")
+            st.write("   - Tenure: 36 months")
+            st.write("   - 2022 Rating: Outstanding")
+            st.write("   - 2023 Rating: Outstanding")
+            st.success("   Prediction: Will not resign (Example)")
+            
+            # Show actual prediction
+            st.subheader("Your Input Prediction:")
             result = "Will resign" if prediction == 1 else "Will not resign"
-            st.success(f"Prediction: {result}")
+            st.success(f"{result}")
+            
+            # Add some visual separation
+            st.markdown("---")
+            
+            # Add action items based on prediction
+            if prediction == 1:
+                st.warning("Recommended Actions:")
+                actions = [
+                    "Schedule one-on-one meeting",
+                    "Review career growth opportunities",
+                    "Check workload balance",
+                    "Consider retention bonus"
+                ]
+            else:
+                st.info("Employee Retention Status:")
+                actions = [
+                    "Employee is engaged",
+                    "Continue regular check-ins",
+                    "Acknowledge good performance",
+                    "Plan career progression"
+                ]
+                
+            for action in actions:
+                st.write(f"✓ {action}")
