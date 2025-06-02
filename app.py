@@ -185,7 +185,7 @@ if uploaded_file is not None:
                 'Professional Level': 'Professional 3',
                 'Team': 'Team 7',
                 'Gender': 'Male',
-                'Tenure': 12,
+                'Tenure': 24,
                 '2022 Rating': 'Effective',
                 '2023 Rating': 'Off Track'
             }
