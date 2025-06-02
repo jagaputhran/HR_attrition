@@ -212,7 +212,7 @@ if uploaded_file is not None:
             # Determine prediction based on input
             if (current_input['Tenure'] <= 18 and 
                 current_input['2023 Rating'] in ['Off Track', 'No Review'] and
-                current_input['Professional Level'] in ['Senior Developer', 'Developer']):
+                current_input['Professional Level'] in ['Professional 3', 'Professional 2']):
                 prediction = "Will Resign"
                 prediction_color = "red"
                 actions = [
