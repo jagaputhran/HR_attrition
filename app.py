@@ -180,10 +180,10 @@ if uploaded_file is not None:
                 '2023 Rating': [rating_2023_encoded]
             })
 
-            # Define example profiles for both scenarios
+            # Define example profiles for both scenarios using actual values from the data
             example_resign = {
-                'Professional Level': 'Senior Developer',
-                'Team': 'Engineering',
+                'Professional Level': 'Professional 3',
+                'Team': 'Team 7',
                 'Gender': 'Male',
                 'Tenure': 12,
                 '2022 Rating': 'Effective',
@@ -191,10 +191,10 @@ if uploaded_file is not None:
             }
             
             example_stay = {
-                'Professional Level': 'Manager',
-                'Team': 'HR',
+                'Professional Level': 'Manager 2',
+                'Team': 'Team 5',
                 'Gender': 'Female',
-                'Tenure': 36,
+                'Tenure': 24,
                 '2022 Rating': 'Outstanding',
                 '2023 Rating': 'Outstanding'
             }
