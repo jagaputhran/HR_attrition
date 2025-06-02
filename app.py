@@ -136,75 +136,11 @@ if uploaded_file is not None:
         # Make predictions and evaluate the model
         y_pred = rf_model.predict(X_test)
         accuracy = accuracy_score(y_test, y_pred)
-        report = classification_report(y_test, y_pred, output_dict=True)
-        
-        # Display model metrics in a more appealing way
-        st.markdown("### Model Performance Metrics")
-        
-        # Create columns for metrics
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            st.metric("Accuracy", f"{accuracy*100:.2f}%")
-            st.metric("Precision", f"{report['1']['precision']*100:.2f}%")
-            
-        with col2:
-            st.metric("Recall", f"{report['1']['recall']*100:.2f}%")
-            st.metric("F1-Score", f"{report['1']['f1-score']*100:.2f}%")
-        
-        # Display detailed classification report in an expander
-        with st.expander("View Detailed Classification Report"):
-            st.markdown("### Classification Report")
-            
-            # Create a DataFrame for the report
-            report_df = pd.DataFrame({
-                'Class': ['0 (Will Not Resign)', '1 (Will Resign)', 'Accuracy', 'Macro Avg', 'Weighted Avg'],
-                'Precision': [
-                    report['0']['precision'],
-                    report['1']['precision'],
-                    report['accuracy'],
-                    report['macro avg']['precision'],
-                    report['weighted avg']['precision']
-                ],
-                'Recall': [
-                    report['0']['recall'],
-                    report['1']['recall'],
-                    report['accuracy'],
-                    report['macro avg']['recall'],
-                    report['weighted avg']['recall']
-                ],
-                'F1-Score': [
-                    report['0']['f1-score'],
-                    report['1']['f1-score'],
-                    report['accuracy'],
-                    report['macro avg']['f1-score'],
-                    report['weighted avg']['f1-score']
-                ],
-                'Support': [
-                    report['0']['support'],
-                    report['1']['support'],
-                    report['1']['support'] + report['0']['support'],
-                    report['macro avg']['support'],
-                    report['weighted avg']['support']
-                ]
-            })
-            
-            # Format the DataFrame
-            report_df_styled = report_df.style\
-                .format({
-                    'Precision': '{:.2%}'.format,
-                    'Recall': '{:.2%}'.format,
-                    'F1-Score': '{:.2%}'.format,
-                    'Support': '{:,.0f}'.format
-                })\
-                .set_properties(**{'text-align': 'center'})\
-                .set_table_styles([
-                    {'selector': 'th', 'props': [('text-align', 'center')]},
-                    {'selector': 'tr:hover', 'props': [('background-color', '#f5f5f5')]}
-                ])
-            
-            # Display the styled DataFrame
-            st.dataframe(report_df_styled, hide_index=True, use_container_width=True)
+        report = classification_report(y_test, y_pred)
+
+        st.write(f"Model Accuracy: {accuracy:.2f}")
+        st.text("Classification Report:")
+        st.text(report)
 
         # Load model and encoders for prediction
         rf_model = joblib.load('random_forest_model.pkl')
